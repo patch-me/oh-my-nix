@@ -16,7 +16,6 @@ require('telescope').setup({
       },
   	},
 })
-vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('undo')
