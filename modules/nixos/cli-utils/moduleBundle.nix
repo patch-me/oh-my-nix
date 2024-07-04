@@ -11,5 +11,6 @@
 
     ./code/rust.nix
     ./code/python.nix
+    ./code/lua.nix
   ];
 }
