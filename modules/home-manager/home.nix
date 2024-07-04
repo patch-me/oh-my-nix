@@ -112,11 +112,7 @@
           config = toLuaFile ./nvim/plugin/cloak.lua;
         }
 
-        {
-          plugin = telescope-undo-nvim;
-          config = toLuaFile ./nvim/plugin/undo.lua;
-        }
-
+        telescope-undo-nvim
         telescope-fzf-native-nvim
 
         cmp_luasnip
