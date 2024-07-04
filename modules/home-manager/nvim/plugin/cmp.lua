@@ -44,3 +44,4 @@ cmp.setup {
         { name = 'luasnip' },
     },
 }
+
