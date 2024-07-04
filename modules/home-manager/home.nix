@@ -88,14 +88,15 @@
           plugin = comment-nvim;
           config = toLua "require(\"Comment\").setup()";
         }
-
         {
           plugin = tokyonight-nvim;
-          config = "colorscheme tokyonight-storm";
+          config = "colorscheme tokyonight-night";
         }
-
+        transparent-nvim
+        catppuccin-vim
+        kanagawa-nvim
+        oxocarbon-nvim
         neodev-nvim
-
         nvim-cmp
         {
           plugin = nvim-cmp;
@@ -105,6 +106,10 @@
         {
           plugin = telescope-nvim;
           config = toLuaFile ./nvim/plugin/telescope.lua;
+        }
+        {
+          plugin = cloak-nvim;
+          config = toLuaFile ./nvim/plugin/cloak.lua;
         }
 
         telescope-fzf-native-nvim
@@ -118,6 +123,7 @@
 
         lualine-nvim
         nvim-web-devicons
+
 
         {
           plugin = (nvim-treesitter.withPlugins (p: [
@@ -150,7 +156,6 @@
       #   ${builtins.readFile ./nvim/plugin/cmp.lua}
       #   ${builtins.readFile ./nvim/plugin/telescope.lua}
       #   ${builtins.readFile ./nvim/plugin/treesitter.lua}
-      #   ${builtins.readFile ./nvim/plugin/other.lua}
       # '';
     };
 

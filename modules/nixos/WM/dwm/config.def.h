@@ -32,14 +32,13 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     {"Gimp", NULL, NULL, 0, 1, -1},
-    {"Firefox", NULL, NULL, 1 << 8, 0, -1},
-};
+    {"Firefox", NULL, NULL, 1 << 8, 0, -1}, };
 
 /* layout(s) */
 static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;    /* number of clients in master area */
 static const int resizehints =
-    1; /* 1 means respect size hints in tiled resizals */
+    0; /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen =
     1; /* 1 will force focus on the fullscreen window */
 
@@ -61,7 +60,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd)                                                             \
   {                                                                            \
-    .v = (const char *[]) { "/bin/sh", "-c", cmd, NULL }                       \
+    .v = (const char *[]) { "/bin/fish", "-c", cmd, NULL }                       \
   }
 
 /* commands */
@@ -71,6 +70,8 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
+static const char *firefox[] = {"firefox", NULL};
+static const char *flameshot[] = {"flame_gui", NULL};
 static const char *clipmd[] = {"clipmenu", "-i", "-fn", dmenufont, NULL};
 static const char *urlcmd[] = {"clipmenu-url", NULL};
 static const char *brightness_up[] = { "brightness_up", NULL };
@@ -79,10 +80,12 @@ static const char *brightness_down[] = { "brightness_down", NULL };
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
+    {MODKEY | ShiftMask, XK_p, spawn, {.v = flameshot}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY, XK_b, spawn, {.v = firefox}},
     {MODKEY, XK_c, spawn, {.v = clipmd}},
     {MODKEY, XK_u, spawn, {.v = urlcmd}},
-    {MODKEY, XK_b, togglebar, {0}},
+    // {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}},
@@ -103,14 +106,11 @@ static const Key keys[] = {
     {MODKEY, XK_period, focusmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-    {MODKEY, XK_minus, setgaps, {.i = -1}},
-    {MODKEY, XK_equal, setgaps, {.i = +1}},
-    {MODKEY | ShiftMask, XK_equal, setgaps, {.i = 0}},
     { MODKEY,  XK_a , spawn, {.v = brightness_down } },
     { MODKEY,  XK_z, spawn, {.v = brightness_up } },
-    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
-        TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
-            TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
+    TAGKEYS(XK_ampersand, 0) TAGKEYS(XK_eacute, 1) TAGKEYS(XK_quotedbl , 2) TAGKEYS(XK_apostrophe, 3)
+        TAGKEYS(XK_parenleft, 4) TAGKEYS(XK_minus, 5) TAGKEYS(XK_egrave, 6) TAGKEYS(XK_underscore, 7)
+            TAGKEYS(XK_ccedilla, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
 };
 
 /* button definitions */
@@ -130,3 +130,4 @@ static const Button buttons[] = {
     {ClkTagBar, MODKEY, Button1, tag, {0}},
     {ClkTagBar, MODKEY, Button3, toggletag, {0}},
 };
+
