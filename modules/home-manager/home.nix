@@ -114,6 +114,7 @@
 
         telescope-undo-nvim
         telescope-fzf-native-nvim
+        telescope-vim-bookmarks-nvim
 
         cmp_luasnip
         cmp-nvim-lsp
@@ -124,6 +125,10 @@
 
         lualine-nvim
         nvim-web-devicons
+        vim-dadbod
+        vim-dadbod-ui
+        # copilot-vim
+        conform-nvim
 
 
         {

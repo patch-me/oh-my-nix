@@ -13,6 +13,8 @@ require('telescope').setup({
             layout_config = {
             preview_height = 0.8,
         },
+        vim_bookmarks={
+        }
       },
   	},
 })
