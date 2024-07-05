@@ -18,5 +18,6 @@
     luajitPackages.luarocks
     postgresql
     gnumake
+    ripgrep
   ];
 }

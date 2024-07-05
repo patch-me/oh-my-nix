@@ -98,6 +98,7 @@
         oxocarbon-nvim
         neodev-nvim
         nvim-cmp
+        vim-bookmarks
         {
           plugin = nvim-cmp;
           config = toLuaFile ./nvim/plugin/cmp.lua;
