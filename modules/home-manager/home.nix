@@ -135,6 +135,7 @@
         nvim-web-devicons
         vim-dadbod
         vim-dadbod-ui
+        nvim-ufo
         # copilot-vim
         conform-nvim
 
