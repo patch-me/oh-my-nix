@@ -116,6 +116,13 @@
         telescope-undo-nvim
         telescope-fzf-native-nvim
         telescope-vim-bookmarks-nvim
+        telescope-coc-nvim
+        telescope-file-browser-nvim
+        telescope-project-nvim
+        telescope-media-files-nvim
+        telescope_hoogle
+        telescope-live-grep-args-nvim
+        harpoon2
 
         cmp_luasnip
         cmp-nvim-lsp
@@ -131,7 +138,6 @@
         # copilot-vim
         conform-nvim
 
-
         {
           plugin = (nvim-treesitter.withPlugins (p: [
             p.tree-sitter-nix
@@ -145,6 +151,8 @@
         }
 
         vim-nix
+        lazygit-nvim
+        markdown-preview-nvim
 
         # {
         #   plugin = vimPlugins.own-onedark-nvim;
