@@ -81,7 +81,3 @@ vim.keymap.set("n", "<leader>l", function()
     end, { desc = "Trigger linting for current file" })
 
 vim.g.vimtex_view_method = 'zathura'
-
-vim.keymap.set("n", "<leader>l", function()
-    lint.try_lint()
-end, { desc = "Trigger linting for current file" })

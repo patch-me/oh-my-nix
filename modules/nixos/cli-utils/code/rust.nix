@@ -19,5 +19,7 @@
     postgresql
     gnumake
     ripgrep
+    haskellPackages.hoogle
+    ast-grep
   ];
 }
