@@ -135,9 +135,11 @@
         nvim-web-devicons
         vim-dadbod
         vim-dadbod-ui
-        nvim-ufo
         # copilot-vim
         conform-nvim
+        neodev-nvim
+        nvim-lint
+        mason-tool-installer-nvim
 
         {
           plugin = (nvim-treesitter.withPlugins (p: [
@@ -154,6 +156,7 @@
         vim-nix
         lazygit-nvim
         markdown-preview-nvim
+        trouble-nvim
 
         # {
         #   plugin = vimPlugins.own-onedark-nvim;
