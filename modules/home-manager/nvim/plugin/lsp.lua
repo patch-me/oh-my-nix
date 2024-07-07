@@ -6,7 +6,7 @@ local on_attach = function(_, bufnr)
     end
 
     bufmap('<leader>r', vim.lsp.buf.rename)
-    bufmap('<leader>a', vim.lsp.buf.code_action)
+    bufmap('<leader>w', vim.lsp.buf.code_action)
 
     bufmap('gd', vim.lsp.buf.definition)
     bufmap('gD', vim.lsp.buf.declaration)
@@ -58,5 +58,8 @@ lspconfig.ruff.setup {
     on_attach = on_attach,
 }
 lspconfig.pylsp.setup{
+    on_attach = on_attach,
+}
+lspconfig.nil_ls.setup{
     on_attach = on_attach,
 }

@@ -6,5 +6,7 @@
     rust-analyzer
     ruff
     python312Packages.python-lsp-server
+    nil
+    black
   ];
 }

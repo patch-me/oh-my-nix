@@ -140,7 +140,11 @@
              vim-dadbod
              vim-dadbod-ui
              # copilot-vim
-             conform-nvim
+             {
+               plugin = conform-nvim;
+               config = toLuaFile ./nvim/plugin/format.lua;
+             }
+             
              neodev-nvim
              nvim-lint
 
