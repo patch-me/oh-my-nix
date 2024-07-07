@@ -10,5 +10,7 @@
     black
     rustfmt
     stylua
+    dockerfile-language-server-nodejs
+    docker-compose-language-service
   ];
 }

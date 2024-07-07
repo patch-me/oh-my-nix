@@ -3,7 +3,7 @@ local conform = require("conform")
 conform.setup({
 	formatters_by_ft = {
 
-		python = { "black", "ruff_formatter" },
+		python = { "black", "ruff_format" },
 		rust = { "rustfmt" },
 		c = { "clang-format" },
 		cpp = { "clang-format" },
