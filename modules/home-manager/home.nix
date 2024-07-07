@@ -65,7 +65,6 @@
      in
      {
        enable = true;
-       extraConfig = ":luafile ~/.config/nvim/init.lua";
 
        viAlias = true;
        vimAlias = true;
@@ -130,8 +129,6 @@
              lsp-zero-nvim
              cmp-path
              cmp-buffer
-             mason-nvim
-             mason-lspconfig-nvim
              lsp-zero-nvim
 
              luasnip
@@ -148,15 +145,18 @@
              nvim-lint
 
              {
-               plugin = (nvim-treesitter.withPlugins (p: [
+              plugin = (nvim-treesitter.withPlugins (p: [
                  p.tree-sitter-nix
                  p.tree-sitter-vim
                  p.tree-sitter-bash
+                 p.tree-sitter-markdown
+                 p.tree-sitter-vimdoc
                  p.tree-sitter-lua
                  p.tree-sitter-python
                  p.tree-sitter-json
+                 p.tree-sitter-rust
                ]));
-               config = toLuaFile ./nvim/plugin/treesitter.lua;
+              config = toLuaFile ./nvim/plugin/treesitter.lua;
              }
 
              vim-nix

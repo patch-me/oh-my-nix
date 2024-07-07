@@ -47,37 +47,102 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
--- vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 
--- local builtin = require("telescope.builtin")
--- vim.keymap.set("n", "<leader>ps", function()
---     builtin.grep_string({ search = vim.fn.input("Grep > ") })
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ps", function()
+    builtin.grep_string({ search = vim.fn.input("Grep > ") })
+end)
+
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+
+vim.g.vimtex_view_method = 'zathura'
+
+
+-- local lsp = require("lsp-zero")
+--
+-- lsp.preset("recommended")
+--
+--
+-- -- Fix Undefined global 'vim'
+-- local cmp = require("cmp")
+-- local cmp_select = { behavior = cmp.SelectBehavior.Select }
+-- local cmp_mappings = lsp.defaults.cmp_mappings({
+--     ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+--     ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+--     ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+--     ["<C-Space>"] = cmp.mapping.complete(),
+-- })
+--
+-- cmp_mappings["<Tab>"] = nil
+-- cmp_mappings["<S-Tab>"] = nil
+--
+-- lsp.set_preferences({
+--     suggest_lsp_servers = false,
+--     sign_icons = {
+--         error = "E",
+--         warn = "W",
+--         hint = "H",
+--         info = "I",
+--     },
+-- })
+--
+-- lsp.on_attach(function(client, bufnr)
+--     local opts = { buffer = bufnr, remap = false }
+--
+--     vim.keymap.set("n", "gd", function()
+--         vim.lsp.buf.definition()
+--     end, opts)
+--     vim.keymap.set("n", "K", function()
+--         vim.lsp.buf.hover()
+--     end, opts)
+--     vim.keymap.set("n", "<leader>vws", function()
+--         vim.lsp.buf.workspace_symbol()
+--     end, opts)
+--     vim.keymap.set("n", "<leader>vd", function()
+--         vim.diagnostic.open_float()
+--     end, opts)
+--     vim.keymap.set("n", "[d", function()
+--         vim.diagnostic.goto_next()
+--     end, opts)
+--     vim.keymap.set("n", "]d", function()
+--         vim.diagnostic.goto_prev()
+--     end, opts)
+--     vim.keymap.set("n", "<leader>vca", function()
+--         vim.lsp.buf.code_action()
+--     end, opts)
+--     vim.keymap.set("n", "<leader>vrr", function()
+--         vim.lsp.buf.references()
+--     end, opts)
+--     vim.keymap.set("n", "<leader>vrn", function()
+--         vim.lsp.buf.rename()
+--     end, opts)
+--     vim.keymap.set("i", "<C-h>", function()
+--         vim.lsp.buf.signature_help()
+--     end, opts)
 -- end)
-
-
--- local harpoon = require("harpoon")
 --
--- -- REQUIRED
--- harpoon:setup()
--- -- REQUIRED
+-- lsp.setup()
 --
--- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+-- vim.diagnostic.config({
+--     virtual_text = true,
+-- })
 --
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
---
--- -- Toggle previous & next buffers stored within Harpoon list
--- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
---
---
--- local lint = require("lint")
---
--- vim.keymap.set("n", "<leader>l", function()
---     lint.try_lint()
---     end, { desc = "Trigger linting for current file" })
---
--- vim.g.vimtex_view_method = 'zathura'
