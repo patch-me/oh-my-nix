@@ -145,8 +145,8 @@
                config = toLuaFile ./nvim/plugin/format.lua;
              }
              
-             neodev-nvim
              nvim-lint
+             vimtex
 
              {
               plugin = (nvim-treesitter.withPlugins (p: [
@@ -167,6 +167,8 @@
              lazygit-nvim
              markdown-preview-nvim
              trouble-nvim
+
+             vim-visual-multi
     
              # {
              #   plugin = vimPlugins.own-onedark-nvim;

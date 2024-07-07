@@ -8,5 +8,7 @@
     python312Packages.python-lsp-server
     nil
     black
+    rustfmt
+    stylua
   ];
 }
