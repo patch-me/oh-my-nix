@@ -23,6 +23,7 @@ conform.setup({
 		markdown = { "prettier" },
 		graphql = { "prettier" },
 		lua = { "stylua" },
+		nix = { "nixfmt" },
 	},
 	format_on_save = {
 		lsp_fallback = true,

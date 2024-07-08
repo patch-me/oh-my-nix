@@ -12,5 +12,6 @@
     stylua
     dockerfile-language-server-nodejs
     docker-compose-language-service
+    nixfmt-classic
   ];
 }

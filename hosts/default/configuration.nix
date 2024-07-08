@@ -5,20 +5,18 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports =
-    [
-      inputs.home-manager.nixosModules.default
-      ./hardware-configuration.nix
-      ../../modules/nixos/modules.nix
-    ];
+  imports = [
+    inputs.home-manager.nixosModules.default
+    ./hardware-configuration.nix
+    ../../modules/nixos/modules.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "biscuit"; # Define your hostname.
-  networking.extraHosts =
-  ''
+  networking.extraHosts = ''
     127.0.0.1 localhost.me
   '';
 
@@ -65,10 +63,8 @@
     isNormalUser = true;
     description = "brioche";
     extraGroups = [ "networkmanager" "wheel" "docker" "disk" "storage" ];
-    packages = with pkgs; [
-      fish
-    ];
-    shell = pkgs.fish;
+    packages = with pkgs; [ fish ];
+    # shell = pkgs.fish;
   };
   users.defaultUserShell = pkgs.fish;
 
@@ -100,9 +96,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = {
-      "brioche" = import ../../modules/home-manager/home.nix;
-    };
+    users = { "brioche" = import ../../modules/home-manager/home.nix; };
   };
   WM.enable = true;
   dwm.enable = true;
@@ -117,7 +111,6 @@
   mail.enable = true;
   bluez.enable = true;
   pass.enable = true;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
