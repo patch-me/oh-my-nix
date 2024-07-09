@@ -16,12 +16,6 @@
       cascadia-code
     ];
 
-    # nixpkgs.overlays = with pkgs;
-    #   [
-    #     (final: prev: {
-    #       st = prev.st.overrideAttrs (old: { src = ./st-flexipatch; });
-    #     })
-    #   ];
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; }) ];
   };

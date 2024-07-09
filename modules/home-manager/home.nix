@@ -44,6 +44,11 @@
     lazygit
     lazydocker
     insomnia
+    grc
+    bat
+    broot
+    procs
+    fd
   ];
 
   programs.git = {
@@ -59,7 +64,49 @@
       and not set -q TMUX
           exec tmux
       end
+      set fish_greeting
     '';
+    # plugins = with pkgs; [ fishPlugins.z ];
+    plugins = [
+      # Enable a plugin (here grc for colorized command output) from nixpkgs
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      # Manually packaging and enable a plugin
+      {
+        name = "z";
+        src = pkgs.fishPlugins.z.src;
+      }
+      {
+        name = "bass";
+        src = pkgs.fishPlugins.bass.src;
+      }
+      {
+        name = "pair";
+        src = pkgs.fishPlugins.pisces.src;
+      }
+      {
+        name = "puffer";
+        src = pkgs.fishPlugins.puffer.src;
+      }
+      {
+        name = "fzf";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
+      {
+        name = "fifc";
+        src = pkgs.fishPlugins.fifc.src;
+      }
+      {
+        name = "forgit";
+        src = pkgs.fishPlugins.forgit.src;
+      }
+      {
+        name = "colored-man-pages";
+        src = pkgs.fishPlugins.colored-man-pages.src;
+      }
+    ];
   };
   programs.tmux = {
     enable = true;
@@ -71,9 +118,25 @@
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.sensible
       tmuxPlugins.vim-tmux-navigator
+      tmuxPlugins.yank
     ];
     extraConfig = ''
+      set -g mouse on
+      set -g set-clipboard on
       set-window-option -g mode-keys vi
+
+      set -g @shell_mode 'vi'
+      set -g @yank_selection 'clipboard'
+      set -g @yank_with_mouse 'on'
+      set -g @yank_selection_mouse 'clipboard'
+      set -g @yank_action 'copy-pipe-and-cancel'
+      bind-key -T copy-mode-vi Enter send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi C-j send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi D send-keys -X copy-end-of-line
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi A send-keys -X append-selection-and-cancel
+      bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
+      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
     '';
   };
 
@@ -147,6 +210,10 @@
       telescope_hoogle
       telescope-live-grep-args-nvim
       harpoon2
+      {
+        plugin = nvim-autopairs;
+        config = toLua ''require("nvim-autopairs").setup()'';
+      }
 
       cmp_luasnip
       cmp-nvim-lsp
@@ -163,7 +230,10 @@
       nvim-web-devicons
       vim-dadbod
       vim-dadbod-ui
-      # copilot-vim
+      {
+        plugin = copilot-vim;
+        config = toLua "vim.g.copilot_enabled = 0";
+      }
       {
         plugin = conform-nvim;
         config = toLuaFile ./nvim/plugin/format.lua;
