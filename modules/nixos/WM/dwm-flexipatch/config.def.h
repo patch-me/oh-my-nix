@@ -870,6 +870,8 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]  = { "st", NULL };
+static const char *prtscrcmd[] = { "flameshot", "gui", NULL};
+static const char *clipmd[] = {"clipmenu", "-i", "-fn", dmenufont, NULL};
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -902,6 +904,8 @@ static const Key keys[] = {
 	#endif // KEYMODES_PATCH
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+    { MODKEY | ShiftMask,           XK_p,          spawn,                  {.v = prtscrcmd}},
+    {MODKEY, XK_c, spawn, {.v = clipmd}},
 	#if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
@@ -1292,15 +1296,15 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F2,         mpdchange,              {.i = +1} },
 	{ MODKEY,                       XK_Escape,     mpdcontrol,             {0} },
 	#endif // MPDCONTROL_PATCH
-	TAGKEYS(                        XK_1,                                  0)
-	TAGKEYS(                        XK_2,                                  1)
-	TAGKEYS(                        XK_3,                                  2)
-	TAGKEYS(                        XK_4,                                  3)
-	TAGKEYS(                        XK_5,                                  4)
-	TAGKEYS(                        XK_6,                                  5)
-	TAGKEYS(                        XK_7,                                  6)
-	TAGKEYS(                        XK_8,                                  7)
-	TAGKEYS(                        XK_9,                                  8)
+	TAGKEYS(                        XK_ampersand,                                  0)
+	TAGKEYS(                        XK_eacute,                                  1)
+	TAGKEYS(                        XK_quotedbl,                                  2)
+	TAGKEYS(                        XK_apostrophe,                                  3)
+	TAGKEYS(                        XK_parenleft,                                  4)
+	TAGKEYS(                        XK_minus,                                  5)
+	TAGKEYS(                        XK_egrave,                                  6)
+	TAGKEYS(                        XK_underscore,                                  7)
+	TAGKEYS(                        XK_ccedilla,                                  8)
 };
 
 #if KEYMODES_PATCH
