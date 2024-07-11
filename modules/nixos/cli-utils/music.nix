@@ -3,21 +3,17 @@
   options = { music.enable = lib.mkEnableOption "enables dwm"; };
 
   config = lib.mkIf config.music.enable {
-    service.mpd = {
+    services.mpd = {
       enable = true;
+      user = "brioche";
       musicDirectory = "/home/brioche/music/";
       extraConfig = ''
         audio_output {
-          type "pipewire"
-          name "My PipeWire Output"
+          type "pulse"
+          name "My PulseAudio" # this can be whatever you want
         }
       '';
-
-      # Optional:
-      network.listenAddress =
-        "any"; # if you want to allow non-localhost connections
-      startWhenNeeded =
-        true; # systemd feature: only start MPD service upon connection to its socket
     };
+    environment.systemPackages = with pkgs; [ mpc-cli ncmpcpp ];
   };
 }
