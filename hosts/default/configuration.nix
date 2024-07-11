@@ -62,7 +62,7 @@
   users.users.brioche = {
     isNormalUser = true;
     description = "brioche";
-    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "storage" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "storage" "kvm" ];
     packages = with pkgs; [ fish ];
     # shell = pkgs.fish;
   };
@@ -78,8 +78,11 @@
     #  wget
     git
     udisks
+    go-mtpfs
+    jmtpfs
   ];
   services.udisks2.enable = true;
+  services.gvfs.enable = true;
 
   # services.xserver.videoDrivers = ["nvidia"];
   #   hardware.nvidia = {
@@ -112,6 +115,7 @@
   bluez.enable = true;
   pass.enable = true;
   ventoy.enable = true;
+  music.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

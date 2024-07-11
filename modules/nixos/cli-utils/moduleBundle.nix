@@ -11,5 +11,6 @@
     ./code/python.nix
     ./code/lua.nix
     ./ventoy.nix
+    ./music.nix
   ];
 }

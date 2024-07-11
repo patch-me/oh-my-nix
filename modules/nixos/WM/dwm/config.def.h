@@ -71,7 +71,7 @@ static const char *dmenucmd[] = {
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
 static const char *firefox[] = {"firefox", NULL};
-static const char *flameshot[] = {"flame_gui", NULL};
+static const char *flameshot[] = { "flameshot", "gui", NULL};
 static const char *clipmd[] = {"clipmenu", "-i", "-fn", dmenufont, NULL};
 static const char *urlcmd[] = {"clipmenu-url", NULL};
 static const char *brightness_up[] = { "brightness_up", NULL };

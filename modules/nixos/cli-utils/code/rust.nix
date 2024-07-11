@@ -21,5 +21,7 @@
     ripgrep
     haskellPackages.hoogle
     ast-grep
+    rsync
+    flameshot
   ];
 }

@@ -20,6 +20,7 @@
       clipmenu
       feh
       dwmblocks
+      betterlockscreen
     ];
   };
 }
