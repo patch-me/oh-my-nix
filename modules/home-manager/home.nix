@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -39,7 +39,6 @@
     notion
     notion-app-enhanced
     signal-desktop-beta
-    vscode
     gitflow
     lazygit
     lazydocker
@@ -49,6 +48,15 @@
     broot
     procs
     fd
+    mpc-cli
+    ncmpcpp
+    scrcpy
+    localsend
+    drawio
+    eslint_d
+    prettierd
+    biome
+    python312Packages.flake8
   ];
 
   programs.git = {
@@ -230,6 +238,7 @@
       nvim-web-devicons
       vim-dadbod
       vim-dadbod-ui
+      tailwindcss-colors-nvim
       {
         plugin = copilot-vim;
         config = toLua "vim.g.copilot_enabled = 0";
@@ -238,8 +247,11 @@
         plugin = conform-nvim;
         config = toLuaFile ./nvim/plugin/format.lua;
       }
+      {
+        plugin = nvim-lint;
+        config = toLuaFile ./nvim/plugin/lint.lua;
+      }
 
-      nvim-lint
       vimtex
 
       {
@@ -277,7 +289,7 @@
 
     # extraLuaConfig = ''
     #   ${builtins.readFile ./nvim/options.lua}
-    #   ${builtins.readFile ./nvim/plugin/lsp.lua}
+    #   ${builtins.readFile ./nvim/plextensionsFromVscodeMarketplaceugin/lsp.lua}
     #   ${builtins.readFile ./nvim/plugin/cmp.lua}
     #   ${builtins.readFile ./nvim/plugin/telescope.lua}
     #   ${builtins.readFile ./nvim/plugin/treesitter.lua}
@@ -291,6 +303,60 @@
   #  enable = true;
   # };
 
+  services.mpd = {
+    enable = true;
+    musicDirectory = "~/music/";
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "PipeWire Sound Server"
+      }
+    '';
+    network.listenAddress = "any";
+  };
+
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions;
+      [
+        ms-toolsai.jupyter
+        esbenp.prettier-vscode
+        charliermarsh.ruff
+        dbaeumer.vscode-eslint
+        davidanson.vscode-markdownlint
+        formulahendry.auto-rename-tag
+        aaron-bond.better-comments
+        naumovs.color-highlight
+        ms-toolsai.datawrangler
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "auto-close-tag";
+          publisher = "formulahendry";
+          version = "0.5.5"; # Update to the latest version
+          sha256 =
+            "gtwKmCk9LcWtr+oJ7DUK+Zv1824aZdVOqkEe2YplE9I="; # lib.fakeSha256;
+        }
+        {
+          name = "vs-code-prettier-eslint";
+          publisher = "rvest";
+          version = "6.0.0"; # Update to the latest version
+          sha256 = "PogNeKhIlcGxUKrW5gHvFhNluUelWDGHCdg5K+xGXJY=";
+        }
+        {
+          name = "rust-analyzer";
+          publisher = "rust-lang";
+          version = "0.4.2035"; # Update to the latest version
+          sha256 = "lbS9YE5sleISA7ro5NgtSx92D9xEUiSoH3K52UBI8so=";
+        }
+        {
+          name = "vscode-sort-json";
+          publisher = "richie5um2";
+          version = "1.20.0"; # Update to the latest version
+          sha256 =
+            "Jobx5Pf4SYQVR2I4207RSSP9I85qtVY6/2Nvs/Vvi/0="; # lib.fakeSha256;
+        }
+      ];
+  };
   home.sessionVariables = { EDITOR = "nvim"; };
 
   programs.home-manager.enable = true;

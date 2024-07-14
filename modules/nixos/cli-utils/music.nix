@@ -3,14 +3,16 @@
   options = { music.enable = lib.mkEnableOption "enables dwm"; };
 
   config = lib.mkIf config.music.enable {
+    # sound.enable = true;
+    # hardware.pulseaudio.enable = true;
     services.mpd = {
       enable = true;
       user = "brioche";
       musicDirectory = "/home/brioche/music/";
       extraConfig = ''
         audio_output {
-          type "pulse"
-          name "My PulseAudio" # this can be whatever you want
+              type "pulse"
+              name "My PulseAudio" # this can be whatever you want
         }
       '';
     };

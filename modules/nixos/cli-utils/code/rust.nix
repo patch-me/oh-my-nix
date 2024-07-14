@@ -23,5 +23,6 @@
     ast-grep
     rsync
     flameshot
+    nodePackages.typescript-language-server
   ];
 }
