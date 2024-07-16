@@ -74,3 +74,5 @@ lspconfig.dockerls.setup({
 })
 lspconfig.docker_compose_language_service.setup({})
 lspconfig.tsserver.setup({})
+lspconfig.mdx_analyzer.setup({})
+lspconfig.marksman.setup({})
