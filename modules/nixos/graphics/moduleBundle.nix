@@ -1,5 +1,1 @@
-{ pkgs, lib, config, ... }: {
-	imports = [
-        ./supergfxctl.nix
-	];
-}
+{ pkgs, lib, config, ... }: { imports = [ ./supergfxctl.nix ]; }

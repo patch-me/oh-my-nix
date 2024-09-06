@@ -1,7 +1,5 @@
 { pkgs, lib, config, ... }: {
-  options = {
-    cli-tools.enable = lib.mkEnableOption "enables cli-tools";
-  };
+  options = { cli-tools.enable = lib.mkEnableOption "enables cli-tools"; };
   imports = [
     ./basic.nix
     ./docker.nix
@@ -12,5 +10,8 @@
     ./code/rust.nix
     ./code/python.nix
     ./code/lua.nix
+    ./ventoy.nix
+    ./music.nix
+    ./android.nix
   ];
 }

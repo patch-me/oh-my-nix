@@ -5,8 +5,8 @@ static const unsigned int borderpx = 1; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
-static const char *fonts[] = {"monospace:size=10"};
-static const char dmenufont[] = "monospace:size=10";
+static const char *fonts[] = {"FiraCodeNerdFont:size=11"};
+static const char dmenufont[] = "FiraCodeNerdFont:size=11";
 static const char col_gray1[] = "#222222";
 static const char col_gray2[] = "#444444";
 static const char col_gray3[] = "#bbbbbb";
@@ -71,7 +71,7 @@ static const char *dmenucmd[] = {
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
 static const char *firefox[] = {"firefox", NULL};
-static const char *flameshot[] = {"flame_gui", NULL};
+static const char *flameshot[] = { "flameshot", "gui", NULL};
 static const char *clipmd[] = {"clipmenu", "-i", "-fn", dmenufont, NULL};
 static const char *urlcmd[] = {"clipmenu-url", NULL};
 static const char *brightness_up[] = { "brightness_up", NULL };

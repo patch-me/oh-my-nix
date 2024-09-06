@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -39,15 +39,28 @@
     notion
     notion-app-enhanced
     signal-desktop-beta
-    vscode
     gitflow
     lazygit
     lazydocker
     insomnia
+    grc
+    bat
+    broot
+    procs
+    fd
+    mpc-cli
+    ncmpcpp
+    scrcpy
+    localsend
+    drawio
+    eslint_d
+    prettierd
+    biome
+    python312Packages.flake8
+    vscodium
+    marksman
+
   ];
-
-
-
 
   programs.git = {
     enable = true;
@@ -55,117 +68,394 @@
     userEmail = "thomasderudder@sfr.fr";
   };
 
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      if status is-interactive
+      and not set -q TMUX
+          exec tmux
+      end
+      set fish_greeting
+    '';
+    # plugins = with pkgs; [ fishPlugins.z ];
+    plugins = [
+      # Enable a plugin (here grc for colorized command output) from nixpkgs
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      # Manually packaging and enable a plugin
+      {
+        name = "z";
+        src = pkgs.fishPlugins.z.src;
+      }
+      {
+        name = "bass";
+        src = pkgs.fishPlugins.bass.src;
+      }
+      {
+        name = "pair";
+        src = pkgs.fishPlugins.pisces.src;
+      }
+      {
+        name = "puffer";
+        src = pkgs.fishPlugins.puffer.src;
+      }
+      {
+        name = "fzf";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
+      {
+        name = "fifc";
+        src = pkgs.fishPlugins.fifc.src;
+      }
+      {
+        name = "forgit";
+        src = pkgs.fishPlugins.forgit.src;
+      }
+      {
+        name = "colored-man-pages";
+        src = pkgs.fishPlugins.colored-man-pages.src;
+      }
+    ];
+  };
+  programs.tmux = {
+    enable = true;
 
+    baseIndex = 1;
+    prefix = "C-Space";
 
+    plugins = with pkgs; [
+      tmuxPlugins.better-mouse-mode
+      tmuxPlugins.sensible
+      tmuxPlugins.vim-tmux-navigator
+      tmuxPlugins.yank
+    ];
+    extraConfig = ''
+      set -g mouse on
+      set -g set-clipboard on
+      set-window-option -g mode-keys vi
 
-  programs.neovim =
-    let
-      toLua = str: "lua << EOF\n${str}\nEOF\n";
-      toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-    in
-    {
-      enable = true;
+      set -g @shell_mode 'vi'
+      set -g @yank_selection 'clipboard'
+      set -g @yank_with_mouse 'on'
+      set -g @yank_selection_mouse 'clipboard'
+      set -g @yank_action 'copy-pipe-and-cancel'
+      bind-key -T copy-mode-vi Enter send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi C-j send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi D send-keys -X copy-end-of-line
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi A send-keys -X append-selection-and-cancel
+      bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
+      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
+    '';
+  };
 
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
+  programs.neovim = let
+    toLua = str: ''
+      lua << EOF
+      ${str}
+      EOF
+    '';
+    toLuaFile = file: ''
+      lua << EOF
+      ${builtins.readFile file}
+      EOF
+    '';
+  in {
+    enable = true;
 
-      extraPackages = with pkgs; [
-        lua-language-server
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
 
-        xclip
-        wl-clipboard
-      ];
+    extraPackages = with pkgs; [
+      lua-language-server
 
-      plugins = with pkgs.vimPlugins; [
+      xclip
+      wl-clipboard
+    ];
 
-        {
-          plugin = nvim-lspconfig;
-          config = toLuaFile ./nvim/plugin/lsp.lua;
-        }
+    plugins = with pkgs.vimPlugins; [
+      {
+        plugin = nvim-lspconfig;
+        config = toLuaFile ./nvim/plugin/lsp.lua;
+      }
 
-        {
-          plugin = comment-nvim;
-          config = toLua "require(\"Comment\").setup()";
-        }
-        {
-          plugin = tokyonight-nvim;
-          config = "colorscheme tokyonight-night";
-        }
-        transparent-nvim
-        catppuccin-vim
-        kanagawa-nvim
-        oxocarbon-nvim
-        neodev-nvim
-        nvim-cmp
-        {
-          plugin = nvim-cmp;
-          config = toLuaFile ./nvim/plugin/cmp.lua;
-        }
+      {
+        plugin = comment-nvim;
+        config = toLua ''require("Comment").setup()'';
+      }
+      {
+        plugin = tokyonight-nvim;
+        config = "colorscheme tokyonight-night";
+      }
+      transparent-nvim
+      catppuccin-vim
+      kanagawa-nvim
+      oxocarbon-nvim
+      neodev-nvim
+      nvim-cmp
+      vim-bookmarks
+      {
+        plugin = nvim-cmp;
+        config = toLuaFile ./nvim/plugin/cmp.lua;
+      }
 
-        {
-          plugin = telescope-nvim;
-          config = toLuaFile ./nvim/plugin/telescope.lua;
-        }
-        {
-          plugin = cloak-nvim;
-          config = toLuaFile ./nvim/plugin/cloak.lua;
-        }
+      {
+        plugin = telescope-nvim;
+        config = toLuaFile ./nvim/plugin/telescope.lua;
+      }
+      {
+        plugin = cloak-nvim;
+        config = toLuaFile ./nvim/plugin/cloak.lua;
+      }
 
-        telescope-fzf-native-nvim
+      telescope-undo-nvim
+      telescope-fzf-native-nvim
+      telescope-vim-bookmarks-nvim
+      telescope-coc-nvim
+      telescope-file-browser-nvim
+      telescope-project-nvim
+      telescope-media-files-nvim
+      telescope_hoogle
+      telescope-live-grep-args-nvim
+      harpoon2
+      {
+        plugin = nvim-autopairs;
+        config = toLua ''require("nvim-autopairs").setup()'';
+      }
 
-        cmp_luasnip
-        cmp-nvim-lsp
+      cmp_luasnip
+      cmp-nvim-lsp
+      cmp-nvim-lua
+      lsp-zero-nvim
+      cmp-path
+      cmp-buffer
+      lsp-zero-nvim
 
-        luasnip
-        friendly-snippets
+      luasnip
+      friendly-snippets
 
+      lualine-nvim
+      nvim-web-devicons
+      vim-dadbod
+      vim-dadbod-ui
+      tailwindcss-colors-nvim
+      {
+        plugin = copilot-vim;
+        config = toLua "vim.g.copilot_enabled = 0";
+      }
+      {
+        plugin = conform-nvim;
+        config = toLuaFile ./nvim/plugin/format.lua;
+      }
+      {
+        plugin = nvim-lint;
+        config = toLuaFile ./nvim/plugin/lint.lua;
+      }
 
-        lualine-nvim
-        nvim-web-devicons
+      vimtex
 
+      {
+        plugin = (nvim-treesitter.withPlugins (p: [
+          p.tree-sitter-nix
+          p.tree-sitter-vim
+          p.tree-sitter-bash
+          p.tree-sitter-markdown
+          p.tree-sitter-vimdoc
+          p.tree-sitter-lua
+          p.tree-sitter-python
+          p.tree-sitter-json
+          p.tree-sitter-rust
+          p.tree-sitter-markdown
+        ]));
+        config = toLuaFile ./nvim/plugin/treesitter.lua;
+      }
 
-        {
-          plugin = (nvim-treesitter.withPlugins (p: [
-            p.tree-sitter-nix
-            p.tree-sitter-vim
-            p.tree-sitter-bash
-            p.tree-sitter-lua
-            p.tree-sitter-python
-            p.tree-sitter-json
-          ]));
-          config = toLuaFile ./nvim/plugin/treesitter.lua;
-        }
+      vim-nix
+      lazygit-nvim
+      markdown-preview-nvim
+      trouble-nvim
 
-        vim-nix
+      vim-visual-multi
 
-        # {
-        #   plugin = vimPlugins.own-onedark-nvim;
-        #   config = "colorscheme onedark";
-        # }
-      ];
+      # {
+      #   plugin = vimPlugins.own-onedark-nvim;
+      #   config = "colorscheme onedark";
+      # }
+    ];
 
-      extraLuaConfig = ''
-        ${builtins.readFile ./nvim/remap.lua}
-        ${builtins.readFile ./nvim/set.lua}
-      '';
+    extraLuaConfig = ''
+      ${builtins.readFile ./nvim/remap.lua}
+      ${builtins.readFile ./nvim/set.lua}
+    '';
 
-      # extraLuaConfig = ''
-      #   ${builtins.readFile ./nvim/options.lua}
-      #   ${builtins.readFile ./nvim/plugin/lsp.lua}
-      #   ${builtins.readFile ./nvim/plugin/cmp.lua}
-      #   ${builtins.readFile ./nvim/plugin/telescope.lua}
-      #   ${builtins.readFile ./nvim/plugin/treesitter.lua}
-      # '';
-    };
+    # extraLuaConfig = ''
+    #   ${builtins.readFile ./nvim/options.lua}
+    #   ${builtins.readFile ./nvim/plextensionsFromVscodeMarketplaceugin/lsp.lua}
+    #   ${builtins.readFile ./nvim/plugin/cmp.lua}
+    #   ${builtins.readFile ./nvim/plugin/telescope.lua}
+    #   ${builtins.readFile ./nvim/plugin/treesitter.lua}
+    # '';
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   # home.file = { };
+  # programs.neovim = {
+  #  enable = true;
+  # };
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
+  services.mpd = {
+    enable = true;
+    musicDirectory = "~/music/";
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "PipeWire Sound Server"
+      }
+    '';
+    network.listenAddress = "any";
   };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    extensions = with pkgs.vscode-extensions;
+      [
+        ms-toolsai.jupyter
+        esbenp.prettier-vscode
+        charliermarsh.ruff
+        dbaeumer.vscode-eslint
+        davidanson.vscode-markdownlint
+        formulahendry.auto-rename-tag
+        aaron-bond.better-comments
+        naumovs.color-highlight
+        ms-toolsai.datawrangler
+        ms-python.python
+        ms-python.black-formatter
+        unifiedjs.vscode-mdx
+        yzhang.markdown-all-in-one
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "auto-close-tag";
+          publisher = "formulahendry";
+          version = "0.5.5"; # Update to the latest version
+          sha256 =
+            "gtwKmCk9LcWtr+oJ7DUK+Zv1824aZdVOqkEe2YplE9I="; # lib.fakeSha256;
+        }
+        {
+          name = "vs-code-prettier-eslint";
+          publisher = "rvest";
+          version = "6.0.0"; # Update to the latest version
+          sha256 = "PogNeKhIlcGxUKrW5gHvFhNluUelWDGHCdg5K+xGXJY=";
+        }
+        {
+          name = "rust-analyzer";
+          publisher = "rust-lang";
+          version = "0.4.2035"; # Update to the latest version
+          sha256 = "lbS9YE5sleISA7ro5NgtSx92D9xEUiSoH3K52UBI8so=";
+        }
+        {
+          name = "vscode-sort-json";
+          publisher = "richie5um2";
+          version = "1.20.0"; # Update to the latest version
+          sha256 =
+            "Jobx5Pf4SYQVR2I4207RSSP9I85qtVY6/2Nvs/Vvi/0="; # lib.fakeSha256;
+        }
+        {
+          name = "theme-monokai-pro-vscode";
+          publisher = "monokai";
+          version = "1.3.2"; # Update to the latest version
+          sha256 = "PznyVIzlKwN21sL+8oC353yxbm1V7ZEHCYQGPSpJRXM=";
+        }
+      ];
+    userSettings = {
+      "editor.fontFamily" = "'FiraCode Nerd Font Mono', 'monospace'";
+      "editor.rulers" = [ 80 ];
+      "editor.fontSize" = 11;
+      "editor.formatOnSave" = true;
+      "editor.insertSpaces" = true;
+      "editor.tabSize" = 2;
+      "editor.detectIndentation" = true;
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      "notebook.formatOnCellExecution" = true;
+      "notebook.formatOnSave.enabled" = true;
+
+      "notebook.codeActionsOnSave" = { "source.organizeImports" = true; };
+
+      "markdown.preview.typographer" = true;
+      "files.associations" = { "*.mdx" = "markdown"; };
+
+      "[python]" = {
+        "editor.formatOnSave" = true;
+        "editor.tabSize" = 4;
+        # "editor.defaultFormatter"= "ms-python.black-formatter";  
+        "editor.defaultFormatter" = "charliermarsh.ruff";
+        "editor.codeActionsOnSave" = {
+          "source.organizeImports" = "explicit";
+          "source.fixAll" = "explicit";
+        };
+      };
+      "black-formatter.args" =
+        [ "--line-length" "80" "--experimental-string-processing" ];
+      "[cpp]" = { "editor.defaultFormatter" = "xaver.clang-format"; };
+      "[toml]" = { "editor.defaultFormatter" = "tamasfe.even-better-toml"; };
+      "[jsonc]" = { "editor.defaultFormatter" = "esbenp.prettier-vscode"; };
+      "[csharp" = {
+        "editor.tabSize" = 4;
+        "editor.formatOnSaveMode" = "file";
+        "editor.defaultFormatter" = "csharpier.csharpier-vscode";
+      };
+
+      "code-runner.runInTerminal" = true;
+      "code-runner.clearPreviousOutput" = false;
+
+      # // Override http proxy support json error:
+      "http.proxySupport" = "off";
+
+      "workbench.iconTheme" = "material-icon-theme";
+      "workbench.editorAssociations" = { "*.svg" = "default"; };
+      "emmet.triggerExpansionOnTab" = true;
+      "cmake.showOptionsMovedNotification" = false;
+      "hediet.vscode-drawio.resizeImages" = null;
+      "security.workspace.trust.untrustedFiles" = "open";
+      "terminal.external.windowsExec" = "C:\\Program Files\\Git\\bin\\bash.exe";
+      "terminal.integrated.defaultProfile.windows" = "PowerShell";
+      "omnisharp.useEditorFormattingSettings" = true;
+      "github.copilot.enable" = {
+        "*" = true;
+        "plaintext" = false;
+        "markdown" = true;
+        "scminput" = false;
+        "csharp" = true;
+      };
+      "docker-compose.enableTelemetry" = true;
+      "cmake.configureOnOpen" = true;
+      "evenBetterToml.formatter.allowedBlankLines" = 1;
+      "terminal.integrated.inheritEnv" = false;
+      "settingsSync.ignoredExtensions" = [
+        "darkempire78.discord-tools"
+        "psioniq.psi-header"
+        "visualstudiotoolsforunity.vstuc"
+      ];
+      "workbench.sideBar.location" = "right";
+      "extensions.experimental.affinity" = { "asvetliakov.vscode-neovim" = 1; };
+      "liveshare.notebooks.allowGuestExecuteCells" = true;
+      "terminal.integrated.shell.windows" = { "maxRows" = 50; };
+      "notebook.output.wordWrap" = true;
+      "notebook.output.scrolling" = true;
+      "notebook.output.textLineLimit" = 16;
+      "redhat.telemetry.enabled" = true;
+      "github.copilot.editor.enableAutoCompletions" = true;
+      "notebook.cellToolbarLocation" = {
+        "default" = "right";
+        "jupyter-notebook" = "left";
+      };
+    };
+  };
+  home.sessionVariables = { EDITOR = "nvim"; };
 
   programs.home-manager.enable = true;
 }
