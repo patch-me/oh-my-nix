@@ -1,20 +1,21 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "thomas";
   home.homeDirectory = "/home/thomas";
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      unstable = import <unstable> { config = config.nixpkgs.config; };
     };
   };
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
+    unstable.signal-desktop
     neofetch
 
     # zip
@@ -38,7 +39,6 @@
     discord
     notion
     notion-app-enhanced
-    signal-desktop-beta
     gitflow
     lazygit
     lazydocker
@@ -59,8 +59,29 @@
     python312Packages.flake8
     vscodium
     marksman
-
   ];
+
+  services.picom = {
+    enable = true;
+    backend = "glx";
+    activeOpacity = 0.9;
+    inactiveOpacity = 0.85;
+    fade = true;
+    fadeDelta = 5;
+
+    settings = {
+      blur = {
+        method = "dual_kawase";
+        strength = 6;
+        size = 10;
+        deviation = 5.0;
+        background = true;
+      };
+      corner-radius = 8.0;
+      round-borders = 1;
+      rounded-corners-exclude = [ "class_g = 'dwm'" ];
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -350,12 +371,6 @@
           publisher = "rvest";
           version = "6.0.0"; # Update to the latest version
           sha256 = "PogNeKhIlcGxUKrW5gHvFhNluUelWDGHCdg5K+xGXJY=";
-        }
-        {
-          name = "rust-analyzer";
-          publisher = "rust-lang";
-          version = "0.4.2035"; # Update to the latest version
-          sha256 = "lbS9YE5sleISA7ro5NgtSx92D9xEUiSoH3K52UBI8so=";
         }
         {
           name = "vscode-sort-json";

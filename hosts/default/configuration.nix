@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, nixpkgs, inputs, ... }:
 
 {
   imports = [
