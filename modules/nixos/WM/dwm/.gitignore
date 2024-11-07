@@ -1,2 +1,5 @@
-./env.h
-./config.h
+dwm
+config.h
+drw.o
+dwm.o
+util.o
