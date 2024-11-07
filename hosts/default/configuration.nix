@@ -32,35 +32,37 @@
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  # Select internationalisation properties.
+  # select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fr_FR.UTF-8";
-    LC_IDENTIFICATION = "fr_FR.UTF-8";
-    LC_MEASUREMENT = "fr_FR.UTF-8";
-    LC_MONETARY = "fr_FR.UTF-8";
-    LC_NAME = "fr_FR.UTF-8";
-    LC_NUMERIC = "fr_FR.UTF-8";
-    LC_PAPER = "fr_FR.UTF-8";
-    LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
+    lc_address = "en_US.utf-8"; # Use US locale for address formatting
+    lc_identification =
+      "en_US.utf-8"; # Use US locale for identification formatting
+    lc_measurement = "en_US.utf-8"; # Use US locale for measurement formatting
+    lc_monetary = "en_US.utf-8"; # Use US locale for monetary formatting
+    lc_name = "en_US.utf-8"; # Use US locale for name formatting
+    lc_numeric = "en_US.utf-8"; # Use US locale for numeric formatting
+    lc_paper = "en_US.utf-8"; # Use US locale for paper size (e.g., letter)
+    lc_telephone =
+      "en_US.utf-8"; # Use US locale for telephone number formatting
+    lc_time = "en_US.utf-8"; # Use US locale for time formatting
   };
 
-  # Configure keymap in X11
+  # configure keymap in x11
   services.xserver = {
-    xkb.layout = "fr";
-    xkb.variant = "";
+    xkb.layout = "us"; # Set X11 keymap to US layout
+    xkb.variant = ""; # Use default variant for US layout
   };
 
-  # Configure console keymap
-  console.keyMap = "fr";
+  # configure console keymap
+  console.keyMap = "us";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.fish.enable = true;
-  users.users.brioche = {
+  users.users.thomas = {
     isNormalUser = true;
-    description = "brioche";
+    description = "thomas";
     extraGroups =
       [ "networkmanager" "wheel" "docker" "disk" "storage" "kvm" "adbusers" ];
     packages = with pkgs; [ fish ];
@@ -101,7 +103,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = { "brioche" = import ../../modules/home-manager/home.nix; };
+    users = { "thomas" = import ../../modules/home-manager/home.nix; };
   };
   WM.enable = true;
   dwm.enable = true;
@@ -110,22 +112,15 @@
   firefox.enable = true;
   docker.enable = true;
   k8s.enable = true;
-  supergfx.enable = true;
+  supergfx.enable = false;
   pipewire.enable = true;
   neovim.enable = true;
   mail.enable = true;
   bluez.enable = true;
   pass.enable = true;
-  ventoy.enable = true;
+  ventoy.enable = false;
   music.enable = true;
-  android.enable = true;
-  sshfs.enable = true;
-  fileSystems."/mnt/mypatch" = {
-    device = "brioche@mypatch.fr:/home/brioche";
-    fsType = "sshfs";
-    options =
-      [ "nodev" "noatime" "allow_other" "IdentityFile=/root/.ssh/id_rsa" ];
-  };
+  android.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
