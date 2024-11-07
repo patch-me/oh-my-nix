@@ -3,8 +3,8 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "brioche";
-  home.homeDirectory = "/home/brioche";
+  home.username = "thomas";
+  home.homeDirectory = "/home/thomas";
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -64,7 +64,7 @@
 
   programs.git = {
     enable = true;
-    userName = "Brioche";
+    userName = "ripitchip";
     userEmail = "thomasderudder@sfr.fr";
   };
 

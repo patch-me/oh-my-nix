@@ -7,8 +7,8 @@
     # hardware.pulseaudio.enable = true;
     services.mpd = {
       enable = true;
-      user = "brioche";
-      musicDirectory = "/home/brioche/music/";
+      user = "thomas";
+      musicDirectory = "/home/thomas/music/";
       extraConfig = ''
         audio_output {
               type "pulse"
