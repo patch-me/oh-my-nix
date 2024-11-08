@@ -16,6 +16,8 @@
       tmux
       protobuf
       steam-run
+      plantuml
+      graphviz
     ];
   };
 }

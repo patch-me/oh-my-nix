@@ -352,6 +352,15 @@
         config = toLuaFile ./nvim/plugin/cloak.lua;
       }
 
+      # Plantuml setup
+      {
+        plugin = plantuml-previewer-vim;
+        config = toLuaFile ./nvim/plugin/plantuml.lua;
+      }
+      plantuml-syntax
+      open-browser-vim
+
+      ####
       telescope-undo-nvim
       telescope-fzf-native-nvim
       telescope-vim-bookmarks-nvim

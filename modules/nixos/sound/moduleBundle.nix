@@ -1,6 +1,9 @@
 { pkgs, lib, config, ... }: {
-  options.sound_driver = {
-    enable = lib.mkEnableOption "Enables sound driver";
+  options.audioDriverConfig = {
+    enable = lib.mkEnableOption "Enables the custom audio driver configuration";
   };
+
+  config.audioDriverConfig.enable = true;
+
   imports = [ ./pipewire.nix ];
 }
