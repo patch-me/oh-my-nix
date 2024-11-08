@@ -110,7 +110,6 @@
   st.enable = true;
   cliTools.enable = true;
   firefox.enable = true;
-  docker.enable = true;
   k8s.enable = true;
   supergfx.enable = false;
   pipewire.enable = true;
@@ -120,7 +119,6 @@
   pass.enable = true;
   ventoy.enable = false;
   music.enable = true;
-  android.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
