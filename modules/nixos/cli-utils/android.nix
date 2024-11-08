@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options = { android.enable = lib.mkEnableOption "enables dwm"; };
+  options = { android.enable = lib.mkEnableOption "enables android"; };
 
   config = lib.mkIf config.android.enable {
     programs.adb.enable = true;
