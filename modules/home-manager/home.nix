@@ -19,6 +19,7 @@
   home.packages = with pkgs; [
     unstable.signal-desktop
     neofetch
+    fastfetch
 
     # zip
     zip
