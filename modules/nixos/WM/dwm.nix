@@ -21,6 +21,7 @@
       feh
       dwmblocks
       betterlockscreen
+      brightnessctl
     ];
   };
 }
